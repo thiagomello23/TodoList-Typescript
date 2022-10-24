@@ -138,8 +138,6 @@ function renderTasks(allTasks: (typeTaskObject)[]) {
     let htmlTemplate:string = '';
 
     // dataset e nome da tarefa
-    // svg = heroIcons
-    // class="task-delete" data-index=${allTasks[i].id}
     for(let i = 0; i < allTasks.length; i++) {
                             // Caso a tarefa tenha sido completada, ela ganha a class "task-completed"
         htmlTemplate += `<li ${allTasks[i].completed ? 'class="task-completed"' : ''}>
