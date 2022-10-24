@@ -25,17 +25,30 @@ form.addEventListener('submit', e => {
     addTasks(task);
     // Renderizando todas as tarefas em um html template
     renderTasks(allTasks);
-    // Debug
-    console.log(allTasks);
 });
 tasksContainer.addEventListener('click', e => {
+    // Pega o target que o usuario clicou
     let target = e.target;
-    if (!target || !target.dataset.id)
+    // Valida se nao e nulo
+    if (!target)
         return;
-    let id = parseInt(target.dataset.id);
-    editTasks(id);
-    // debug
-    console.log(allTasks);
+    // Caso o usuario tenha clicado no icone de delete
+    if (target.classList.contains('task-delete')) {
+        const id = target.dataset.index;
+        if (!id)
+            return;
+        // Deleta o dado da tarefa e renderiza todas as tarefas
+        deleteTask(parseInt(id));
+        renderTasks(allTasks);
+    }
+    // Caso o usuario tenha clicado na checkbox
+    if (target.dataset.id) {
+        let id = parseInt(target.dataset.id);
+        // Edita a tarefa (se foi completada ou nao) e renderiza todas as tarefas
+        editTasks(id);
+        renderTasks(allTasks);
+    }
+    ;
 });
 // FUNÇÕES
 // cria uma nova tarefa em formato de objeto
@@ -50,8 +63,10 @@ function createTasks(newTask) {
     taskObject.completed = false;
     return taskObject;
 }
+// Adiciona uma nova tarefa a um array global chamado "allTasks"
 function addTasks(task) {
     allTasks.push(task);
+    // Faz armazenamento local
     localStorage.setItem('todoTask', JSON.stringify(allTasks));
 }
 // modifica uma tarefa especifica (para dizer se foi completada ou nao)
@@ -64,16 +79,35 @@ function editTasks(identificador) {
     // adiciona a mudanca no armazenamento local
     localStorage.setItem('todoTask', JSON.stringify(allTasks));
 }
+// Deleta uma tarefa
+function deleteTask(id) {
+    // Cria um novo array sem a tarefa deletada
+    const attTask = allTasks.filter(task => {
+        if (task.id != id)
+            return task;
+    });
+    // Repassa o array para o array principal
+    allTasks = attTask;
+    // Salva as modificacoes de maneira local
+    localStorage.setItem('todoTask', JSON.stringify(allTasks));
+}
 // cria templates html das tarefas existentes
 function renderTasks(allTasks) {
     let htmlTemplate = '';
     // dataset e nome da tarefa
+    // svg = heroIcons
+    // class="task-delete" data-index=${allTasks[i].id}
     for (let i = 0; i < allTasks.length; i++) {
-        htmlTemplate += `<li>
+        // Caso a tarefa tenha sido completada, ela ganha a class "task-completed"
+        htmlTemplate += `<li ${allTasks[i].completed ? 'class="task-completed"' : ''}>
                             ${allTasks[i].tasks}
-                            <input type="checkbox" ${allTasks[i].completed ? 'checked' : ''} data-id=${allTasks[i].id}>
+                            <div class="task-options">
+                                <input type="checkbox" ${allTasks[i].completed ? 'checked' : ''} data-id=${allTasks[i].id}>
+                                <i class="fa-solid fa-trash task-delete" data-index=${allTasks[i].id}></i>
+                            </div>
                         </li>`;
     }
+    // Renderiza no html
     tasksContainer.innerHTML = htmlTemplate;
 }
 // gera um ID "unico" para cada tarefa

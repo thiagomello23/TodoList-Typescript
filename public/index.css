@@ -10,3 +10,91 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.container {
+    min-height: 100vh;
+    width: 100%;
+    background-color: #00afb9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container-wrapper {
+    margin-top: 100px;
+    margin-bottom: 80px;
+    width: 350px;
+    flex-wrap: wrap;
+}
+
+.container-title {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.form-task {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.input-task {
+    outline: none;
+    border: none;
+    font-size: 20px;
+    padding: 8px 16px;
+    height: 100%;
+    width: 80%;
+}
+
+.btn-task {
+    border: none;
+    height: 100%;
+    padding: 10px;
+    cursor: pointer;
+    width: 20%;
+}
+
+.task-add {
+    height: 24px;
+    color: #000;
+}
+
+.task-container {
+    background-color: #a2d2ff;
+    padding: 20px;
+}
+
+.task-container li {
+    list-style-type: none;
+    text-align: center;
+    background-color: #bde0fe;
+    padding: 10px;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.task-container input {
+    height: 20px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.task-completed {
+    text-decoration: line-through;
+}
+
+.task-delete {
+    height: 16px;
+    cursor: pointer;
+    color: #ef233c;
+}
+
+.task-options {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
